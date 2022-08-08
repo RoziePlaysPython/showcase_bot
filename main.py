@@ -1,4 +1,5 @@
 #/usr/bin/python3
+from dataclasses import dataclass
 from sys import argv
 from telegram import Bot
 from telegram.ext import CommandHandler
@@ -9,10 +10,12 @@ import logging
 import messages # message text is stored here
 import filebase # some filenames store here
 import csv # used to write persistent data
+from dumpsters import CSVDumpster
+
 
 BOT_TOKEN = argv[1]
-print(BOT_TOKEN)
 upd = Updater(token=BOT_TOKEN, use_context=True)
+upd.bot.data['dumpster'] = CSVDumpster(filename = filebase.HIREME_FILENAME)
 disp = upd.dispatcher
 logging.basicConfig(format='>%(asctime)s - %(name)s - %(levelname)s - %(message)s<', level=logging.INFO)
 
@@ -32,22 +35,11 @@ def hireme_message(update, context):
             update.effective_user.username,
             update.effective_user.language_code
             ]
-    writedata(userstats)
+    context.bot.data['dumpster'].writedata(userstats)
     return
 
-def writedata(userstats: list):
-    """
-    This should store a collection of userstats persistently and add new as it's called
-    Then when list reaches 100 elements, it's written in csv file and emptied
-    """
-    if 'datasum' not in locals():
-        datasum = []
-    datasum.append(userstats)
-    if len(datasum) >=100:
-        with open(filebase.HIREME_FILENAME, 'a') as hireme_file:
-            hireme_writer = csv.writer(hireme_file)
-            hireme_writer.writerows(datasum)
-    yield 0
+            
+
 #handler zone
 start_handler = CommandHandler('start', start)
 
