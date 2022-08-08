@@ -1,17 +1,18 @@
 #/usr/bin/python3
 from sys import argv
+from telegram import Bot
 from telegram.ext import CommandHandler
 from telegram.ext import CallbackQueryHandler as CQHandler
 from telegram.ext import Updater
 import logging
-import credentials # this is where BOT_TOKEN is stored
+# import credentials # No longer used, BOT_TOKEN is taken from sys.argv[1]
 import messages # message text is stored here
 import filebase # some filenames store here
 import csv # used to write persistent data
-# import os.fsync as fsync# sync data with hard drive
 
-
-upd = Updater(token=credentials.BOT_TOKEN, use_context=True)
+BOT_TOKEN = argv[1]
+print(BOT_TOKEN)
+upd = Updater(token=BOT_TOKEN, use_context=True)
 disp = upd.dispatcher
 logging.basicConfig(format='>%(asctime)s - %(name)s - %(levelname)s - %(message)s<', level=logging.INFO)
 
