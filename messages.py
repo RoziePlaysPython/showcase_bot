@@ -9,5 +9,8 @@ These are all commands I can interact with:
     /hireme - view creator's contact information
 '''
 hireme_message = '''
-
+Hello, @user.
+You can leave a message for me with a button below.
+However, if you are willing to contact me directly, here's my telegram link:
+https://t.me/uwuashell
 '''
