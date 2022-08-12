@@ -11,7 +11,13 @@ class CSVDumpster:
     def writedata(self, data):
         self.events.append(data)
         if len(self.events)>=100:
-            with open(filename, 'a') as hireme_file:
+            self.dedupe()
+            with open(self.filename, 'a') as hireme_file:
                 hireme_writer = csv.writer(hireme_file)
                 hireme_writer.writerows(self.events)
             self.events.clear()
+    def dedupe(self) -> list:
+        """
+        This method checks for duplicated forms in self.events and removes duplicates
+        """
+        self.events = list(set(self.events))
