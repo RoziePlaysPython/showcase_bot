@@ -7,6 +7,7 @@ These are all commands I can interact with:
     /start - send start message
     /help - this message
     /hireme - leave a message for me and view my contact information
+    /sort - sort an array of integers using merge sort algorithm (check this on github!)
 '''
 hireme_message_text = '''
 Hello, @user\.
